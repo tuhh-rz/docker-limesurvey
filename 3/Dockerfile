@@ -12,7 +12,7 @@ RUN apt-get install -qy \
     
 RUN apt-get clean
 
-RUN git clone --branch ${VERSION} ${REPOSITORY} /app
+RUN git clone --branch "${VERSION}" "${REPOSITORY}" /app
 
 VOLUME /app/upload
 
