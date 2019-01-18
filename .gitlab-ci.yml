@@ -1,0 +1,88 @@
+variables:
+    CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    LATEST_VERSION: '3'
+
+.build_script_template:
+    script:  &build_script_definition
+        - pwd
+        - sudo docker build --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" -f "${VERSION}/${VARIANT}/Dockerfile" .
+        
+.build_before_script_template:
+    before_script:  &build_before_script_definition
+        - pwd
+        - git submodule update --init --recursive
+        
+.deploy_script_template:
+    script:  &deploy_script_definition
+        - pwd
+        - sudo docker push "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"
+        - if [ ! -z ${LATEST_VERSION} ] && [ "${LATEST_VERSION}" == "${VERSION}${VARIANT:+-$VARIANT}" ]; then sudo docker tag "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${CONTAINER_RELEASE_IMAGE}:latest"; sudo docker push "${CONTAINER_RELEASE_IMAGE}:latest"; fi
+
+.build_branches_script_template:
+    script:  &build_branches_script_definition
+        - pwd
+        - sudo docker build --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}" "${VERSION}"/"${VARIANT}"
+        
+.build_branches_before_script_template:
+    before_script:  &build_branches_before_script_definition
+        - pwd
+        - git submodule update --init --recursive
+        
+.deploy_branches_script_template:
+    script:  &deploy_branches_script_definition
+        - pwd
+        - sudo docker push "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}"
+
+stages:
+    - build
+    - deploy
+
+build:3:
+    stage: build
+    only:
+        - master
+    tags:
+        - build
+    variables:
+        VERSION: '3'
+        VARIANT: ''
+    before_script: *build_before_script_definition
+    script: *build_script_definition
+
+deploy:3:
+    stage: deploy
+    tags:
+        - deploy
+    only:
+        - master
+    variables:
+        VERSION: '3'
+        VARIANT: ''
+    script: *deploy_script_definition 
+
+build:branches:3:
+    stage: build
+    only:
+        - branches
+    except:
+        - master
+    tags:
+        - build
+    variables:
+        VERSION: '3'
+        VARIANT: ''
+    before_script: *build_branches_before_script_definition
+    script: *build_branches_script_definition
+
+deploy:branches:3:
+    stage: deploy
+    tags:
+        - deploy
+    only:
+        - branches
+    except:
+        - master
+    variables:
+        VERSION: '3'
+        VARIANT: ''    
+    script: *deploy_branches_script_definition
