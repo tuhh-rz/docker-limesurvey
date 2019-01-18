@@ -3,18 +3,13 @@ FROM php:7.3-apache
 ENV VERSION '3.15.5+181115'
 ENV REPOSITORY 'https://github.com/LimeSurvey/LimeSurvey.git'
 
+RUN pecl install \
+    gd \
+    mbstring
+
 RUN \
     apt-get update && \
     apt-get upgrade -qy
-    
-RUN docker-php-ext-install \
-    gd \
-    mbstring
-    
-RUN docker-php-ext-enable \
-    gd \
-    mbstring
-    
     
 RUN apt-get install -qy \
     git
