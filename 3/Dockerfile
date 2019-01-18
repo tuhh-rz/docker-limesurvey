@@ -7,6 +7,15 @@ RUN \
     apt-get update && \
     apt-get upgrade -qy
     
+RUN docker-php-ext-install \
+    gd \
+    mbstring
+    
+RUN docker-php-ext-enable \
+    gd \
+    mbstring
+    
+    
 RUN apt-get install -qy \
     git
     
