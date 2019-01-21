@@ -23,7 +23,8 @@ RUN apt-get install -qy \
     php-zip
     
 RUN apt-get install -qy \
-    git
+    git \
+    supervisor
     
 RUN apt-get clean
 
