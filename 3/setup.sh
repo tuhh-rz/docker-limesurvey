@@ -46,8 +46,6 @@ perl -i -pe 's/<\/VirtualHost>/<Directory \/var\/www\/html>\nAllowOverride ALL\n
 rsync -rc /opt/limesurvey/* "/var/www/html"
 chown -Rf www-data.www-data "/var/www/html"
 
-chown -Rf www-data.www-data /var/www/html/
-
 find /var/www/html -type f -print0 | xargs -0 chmod 660
 find /var/www/html -type d -print0 | xargs -0 chmod 770
 
