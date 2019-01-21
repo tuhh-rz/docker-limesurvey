@@ -24,11 +24,12 @@ RUN apt-get install -qy \
     
 RUN apt-get install -qy \
     git \
+    rsync \
     supervisor
     
 RUN apt-get clean
 
-RUN git clone --branch "${VERSION}" "${REPOSITORY}" /app
+RUN git clone --branch "${VERSION}" "${REPOSITORY}" /opt/limesurvey
 
 COPY ${MAJOR_VERSION}/apache.sh /opt/apache.sh
 RUN chmod +x /opt/apache.sh

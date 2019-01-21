@@ -43,8 +43,8 @@ perl -i -pe 's/^(\s*;\s*)*memory_limit.*/memory_limit = $ENV{'MEMORY_LIMIT'}/g' 
 
 perl -i -pe 's/<\/VirtualHost>/<Directory \/var\/www\/html>\nAllowOverride ALL\n<\/Directory>\n<\/VirtualHost>/' /etc/apache2/sites-available/000-default.conf
 
-rsync -rc /opt/wordpress/wordpress/* "/var/www/html/${RELATIVE_PATH}"
-chown -Rf www-data.www-data "/var/www/html/${RELATIVE_PATH}"
+rsync -rc /opt/limesurvey/* "/var/www/html"
+chown -Rf www-data.www-data "/var/www/html"
 
 chown -Rf www-data.www-data /var/www/html/
 
