@@ -27,7 +27,22 @@ RUN apt-get clean
 
 RUN git clone --branch "${VERSION}" "${REPOSITORY}" /app
 
+COPY ./apache.sh /opt/apache.sh
+RUN chmod +x /opt/apache.sh
+
+COPY ./conf/supervisord.conf /etc/supervisord.conf
+
+RUN rm /etc/apache2/sites-enabled/*
+#ADD ./conf/default-ssl.conf /etc/apache2/sites-enabled
+ADD ./conf/default.conf /etc/apache2/sites-enabled
+
+ADD ./conf/remoteip.conf /etc/apache2/conf-available
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 VOLUME /app/upload
 
 EXPOSE 80
+
+CMD ["/opt/setup.sh"]
 
