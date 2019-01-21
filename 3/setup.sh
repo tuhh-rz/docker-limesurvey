@@ -1,6 +1,6 @@
 #!/bin/bash
 
-chown -Rf www-data.www-data /var/www/html/
+chown -Rf www-data.www-data /var/www/app/
 
 if [[ ${ENABLE_SSL} == "true" ]]; then
     sed -i '/SSLCertificateFile/d' /etc/apache2/sites-available/default-ssl.conf
@@ -43,10 +43,10 @@ perl -i -pe 's/^(\s*;\s*)*memory_limit.*/memory_limit = $ENV{'MEMORY_LIMIT'}/g' 
 
 perl -i -pe 's/<\/VirtualHost>/<Directory \/var\/www\/html>\nAllowOverride ALL\n<\/Directory>\n<\/VirtualHost>/' /etc/apache2/sites-available/000-default.conf
 
-rsync -rc /opt/limesurvey/* "/var/www/html"
-chown -Rf www-data.www-data "/var/www/html"
+rsync -rc /opt/limesurvey/* "/var/www/app"
+chown -Rf www-data.www-data "/var/www/app"
 
-find /var/www/html -type f -print0 | xargs -0 chmod 660
-find /var/www/html -type d -print0 | xargs -0 chmod 770
+find /var/www/app -type f -print0 | xargs -0 chmod 660
+find /var/www/app -type d -print0 | xargs -0 chmod 770
 
 exec /usr/bin/supervisord -nc /etc/supervisord.conf
