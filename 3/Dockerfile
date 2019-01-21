@@ -20,6 +20,7 @@ RUN apt-get install -qy \
     php-ldap \
     php-mbstring \
     php-mysql \
+    php-xml \
     php-zip
     
 RUN apt-get install -qy \
