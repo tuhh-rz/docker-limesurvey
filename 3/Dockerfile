@@ -1,15 +1,24 @@
-FROM php:7.3-apache
+FROM ubuntu:18.04
 
 ENV VERSION '3.15.5+181115'
 ENV REPOSITORY 'https://github.com/LimeSurvey/LimeSurvey.git'
 
-RUN pecl install \
-    gd \
-    mbstring
+# Let the conatiner know that there is no tty
+ENV DEBIAN_FRONTEND noninteractive
 
-RUN \
-    apt-get update && \
+RUN apt-get update && \
     apt-get upgrade -qy
+
+RUN apt-get install -qy \
+    apache2 \
+    libapache2-mod-php \
+    php \
+    php-gd \
+    php-imap \
+    php-ldap \
+    php-mbstring \
+    php-mysql \
+    php-zip
     
 RUN apt-get install -qy \
     git
