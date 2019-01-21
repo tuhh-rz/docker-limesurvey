@@ -32,6 +32,9 @@ RUN git clone --branch "${VERSION}" "${REPOSITORY}" /app
 COPY ${MAJOR_VERSION}/apache.sh /opt/apache.sh
 RUN chmod +x /opt/apache.sh
 
+COPY ${MAJOR_VERSION}/setup.sh /opt/setup.sh
+RUN chmod +x /opt/setup.sh
+
 COPY ${MAJOR_VERSION}/conf/supervisord.conf /etc/supervisord.conf
 
 RUN rm /etc/apache2/sites-enabled/*
