@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ARG MAJOR_VERSION=3
+
 ENV VERSION '3.15.5+181115'
 ENV REPOSITORY 'https://github.com/LimeSurvey/LimeSurvey.git'
 
@@ -27,16 +29,16 @@ RUN apt-get clean
 
 RUN git clone --branch "${VERSION}" "${REPOSITORY}" /app
 
-COPY ./apache.sh /opt/apache.sh
+COPY ${MAJOR_VERSION}/apache.sh /opt/apache.sh
 RUN chmod +x /opt/apache.sh
 
-COPY ./conf/supervisord.conf /etc/supervisord.conf
+COPY ${MAJOR_VERSION}/conf/supervisord.conf /etc/supervisord.conf
 
 RUN rm /etc/apache2/sites-enabled/*
-#ADD ./conf/default-ssl.conf /etc/apache2/sites-enabled
-ADD ./conf/default.conf /etc/apache2/sites-enabled
+#ADD ${MAJOR_VERSION}/conf/default-ssl.conf /etc/apache2/sites-enabled
+ADD ${MAJOR_VERSION}/conf/default.conf /etc/apache2/sites-enabled
 
-ADD ./conf/remoteip.conf /etc/apache2/conf-available
+ADD ${MAJOR_VERSION}/conf/remoteip.conf /etc/apache2/conf-available
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
