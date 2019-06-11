@@ -48,7 +48,7 @@ ADD ${MAJOR_VERSION}/conf/remoteip.conf /etc/apache2/conf-available
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-VOLUME /app/upload
+#VOLUME /app/upload
 
 EXPOSE 80
 
