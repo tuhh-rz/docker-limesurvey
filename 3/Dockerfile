@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 ARG MAJOR_VERSION=3
 
-ENV VERSION '3.15.5+181115'
+ENV VERSION '3.17.4+190529'
 ENV REPOSITORY 'https://github.com/LimeSurvey/LimeSurvey.git'
 
 # Let the conatiner know that there is no tty
