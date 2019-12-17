@@ -21,7 +21,7 @@ variables:
 .build_branches_script_template:
     script:  &build_branches_script_definition
         - pwd
-        - sudo docker build --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}" "${VERSION}"/"${VARIANT}"
+        - sudo docker build --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}" -f "${VERSION}/${VARIANT}/Dockerfile" .
         
 .build_branches_before_script_template:
     before_script:  &build_branches_before_script_definition
