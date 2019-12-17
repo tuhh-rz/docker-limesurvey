@@ -49,4 +49,6 @@ chown -Rf www-data.www-data "/var/www/app"
 find /var/www/app -type f -print0 | xargs -0 chmod 660
 find /var/www/app -type d -print0 | xargs -0 chmod 770
 
+su -s /bin/bash  -c 'php /var/www/app/application/commands/console.php updatedb' www-data
+
 exec /usr/bin/supervisord -nc /etc/supervisord.conf
