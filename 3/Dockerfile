@@ -3,10 +3,12 @@ FROM ubuntu:18.04
 
 ARG VERSION=${VERSION:-3.21.3+191219}
 ENV VERSION=$VERSION
-# Das sollte besser aus VERSION ermittelt werden
-ARG MAJOR_VERSION=3
-
 RUN echo $VERSION
+
+ARG MAJOR_VERSION=${MAJOR_VERSION:-3}
+ENV MAJOR_VERSION=$MAJOR_VERSION
+RUN echo $MAJOR_VERSION
+
 
 ENV REPOSITORY 'https://github.com/LimeSurvey/LimeSurvey.git'
 

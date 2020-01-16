@@ -9,7 +9,8 @@ variables:
     - build_version=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .version')
     - if [[ -z $build_version ]]; then build_version="$VERSION"; fi
     - build_version=$(echo $build_version | sed -e 's/%2B/+/g')
-    - sudo docker build --build-arg VERSION="${build_version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
+    - major_version=3
+    - sudo docker build --build-arg VERSION="${build_version}" MAJOR_VERSION="${major_version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
 
         
 .build_before_script_template:
