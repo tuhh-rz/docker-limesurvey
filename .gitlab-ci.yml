@@ -10,7 +10,7 @@ variables:
     - if [[ -z $build_version ]]; then build_version="$VERSION"; fi
     - build_version=$(echo $build_version | sed -e 's/%2B/+/g')
     - major_version=3
-    - sudo docker build --build-arg VERSION="${build_version}" MAJOR_VERSION="${major_version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
+    - sudo docker build --build-arg VERSION="${build_version}" --build-arg MAJOR_VERSION="${major_version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
 
         
 .build_before_script_template:
