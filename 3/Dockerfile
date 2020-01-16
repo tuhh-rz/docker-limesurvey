@@ -1,9 +1,13 @@
 FROM ubuntu:18.04
 
+
+ARG VERSION=${VERSION:-3.21.3+191219}
+ENV VERSION=$VERSION
+# Das sollte besser aus VERSION ermittelt werden
 ARG MAJOR_VERSION=3
 
-#ENV VERSION '3.21.2+191216'
-ENV VERSION '3.21.3+191219'
+RUN echo $VERSION
+
 ENV REPOSITORY 'https://github.com/LimeSurvey/LimeSurvey.git'
 
 # Let the conatiner know that there is no tty
