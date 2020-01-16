@@ -39,19 +39,19 @@ RUN apt-get clean
 
 RUN git clone --branch "${VERSION}" "${REPOSITORY}" /opt/limesurvey
 
-COPY ${MAJOR_VERSION}/apache.sh /opt/apache.sh
+COPY ./apache.sh /opt/apache.sh
 RUN chmod +x /opt/apache.sh
 
-COPY ${MAJOR_VERSION}/setup.sh /opt/setup.sh
+COPY ./setup.sh /opt/setup.sh
 RUN chmod +x /opt/setup.sh
 
-COPY ${MAJOR_VERSION}/conf/supervisord.conf /etc/supervisord.conf
+COPY ./conf/supervisord.conf /etc/supervisord.conf
 
 RUN rm /etc/apache2/sites-enabled/*
-#ADD ${MAJOR_VERSION}/conf/default-ssl.conf /etc/apache2/sites-enabled
-ADD ${MAJOR_VERSION}/conf/default.conf /etc/apache2/sites-enabled
+#ADD ./conf/default-ssl.conf /etc/apache2/sites-enabled
+ADD ./conf/default.conf /etc/apache2/sites-enabled
 
-ADD ${MAJOR_VERSION}/conf/remoteip.conf /etc/apache2/conf-available
+ADD ./conf/remoteip.conf /etc/apache2/conf-available
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
