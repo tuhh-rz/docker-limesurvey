@@ -5,7 +5,7 @@ variables:
 .build_script_template:
   script: &build_script_definition
     - pwd
-    - key="LimeSurvey"
+    - key="LimeSurvey 3"
     - build_version=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .version')
     - if [[ -z $build_version ]]; then build_version="$VERSION"; fi
     - build_version=$(echo $build_version | sed -e 's/%2B/+/g')
