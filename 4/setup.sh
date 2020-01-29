@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir -p /var/limesurvey/runtime/
+chown  www-data.www-data /var/limesurvey/runtime/
+
 chown -Rf www-data.www-data /var/www/app/
 
 if [[ ${ENABLE_SSL} == "true" ]]; then
