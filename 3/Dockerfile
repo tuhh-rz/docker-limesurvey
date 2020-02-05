@@ -1,11 +1,12 @@
 FROM ubuntu:18.04
 
-
-ARG VERSION=${VERSION:-3.21.3+191219}
+ARG VERSION=${VERSION}
 ENV VERSION=$VERSION
 RUN echo $VERSION
 
-ENV REPOSITORY 'https://github.com/LimeSurvey/LimeSurvey.git'
+ARG DOWNLOAD=${DOWNLOAD}
+ENV DOWNLOAD=$DOWNLOAD
+RUN echo $DOWNLOAD
 
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
@@ -28,11 +29,13 @@ RUN apt-get install -qy \
 RUN apt-get install -qy \
     git \
     rsync \
-    supervisor
+    supervisor \
+    wget
 
 RUN apt-get clean
 
-RUN git clone --branch "${VERSION}" "${REPOSITORY}" /opt/limesurvey
+RUN wget "${DOWNLOAD}" -O /tmp/download.tar.gz
+RUN tar xf /tmp/download.tar.gz -C /opt && rm /tmp/download.tar.gz
 
 COPY ./apache.sh /opt/apache.sh
 RUN chmod +x /opt/apache.sh
