@@ -1,0 +1,10 @@
+{
+  "docker-tags": {
+    "3": {
+      "build-branch": "master"
+    },
+    "4": {
+      "build-branch": "master"
+    }
+  }
+}
