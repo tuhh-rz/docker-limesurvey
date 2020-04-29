@@ -60,7 +60,7 @@ stages:
 build:branches:4.2.1:
   stage: build
   rules:
-    - if: '$CI_COMMIT_REF_NAME == "incubartor"'
+    - if: '$CI_COMMIT_REF_NAME == "incubator"'
   retry: 2
   tags:
     - build
@@ -73,7 +73,7 @@ build:branches:4.2.1:
 deploy:branches:4.2.1:
   stage: deploy
   rules:
-    - if: '$CI_COMMIT_REF_NAME == "incubartor"'
+    - if: '$CI_COMMIT_REF_NAME == "incubator"'
   needs: ["build:branches:4.2.1"]
   tags:
     - deploy
