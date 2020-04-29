@@ -110,8 +110,11 @@ deploy:4:
 build:branches:4:
   stage: build
   rules:
-    - if: '$CI_COMMIT_REF_NAME != "master"'
-    - if: '$CI_COMMIT_REF_NAME != "incubator"'
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      when: never
+    - if: '$CI_COMMIT_REF_NAME == "incubator"'
+      when: never
+    - when: always
   retry: 2
   tags:
     - build
@@ -124,8 +127,11 @@ build:branches:4:
 deploy:branches:4:
   stage: deploy
   rules:
-    - if: '$CI_COMMIT_REF_NAME != "master"'
-    - if: '$CI_COMMIT_REF_NAME != "incubator"'
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      when: never
+    - if: '$CI_COMMIT_REF_NAME == "incubator"'
+      when: never
+    - when: always
   needs: ["build:branches:4"]
   tags:
     - deploy
@@ -162,8 +168,11 @@ deploy:3:
 build:branches:3:
   stage: build
   rules:
-    - if: '$CI_COMMIT_REF_NAME != "master"'
-    - if: '$CI_COMMIT_REF_NAME != "incubator"'
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      when: never
+    - if: '$CI_COMMIT_REF_NAME == "incubator"'
+      when: never
+    - when: always
   retry: 2
   tags:
     - build
@@ -176,8 +185,11 @@ build:branches:3:
 deploy:branches:3:
   stage: deploy
   rules:
-    - if: '$CI_COMMIT_REF_NAME != "master"'
-    - if: '$CI_COMMIT_REF_NAME != "incubator"'
+    - if: '$CI_COMMIT_REF_NAME == "master"'
+      when: never
+    - if: '$CI_COMMIT_REF_NAME == "incubator"'
+      when: never
+    - when: always
   needs: ["build:branches:3"]
   tags:
     - deploy
