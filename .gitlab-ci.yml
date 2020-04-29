@@ -57,11 +57,40 @@ stages:
   - deploy
   - build_siblings
 
+build:branches:4.2.1:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "incubartor"'
+  retry: 2
+  tags:
+    - build
+  variables:
+    VERSION: "4.2.1"
+    VARIANT: ""
+  before_script: *build_branches_before_script_definition
+  script: *build_branches_script_definition
+
+deploy:branches:4.2.1:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "incubartor"'
+  needs: ["build:branches:4.2.1"]
+  tags:
+    - deploy
+  only:
+    - branches
+  except:
+    - master
+  variables:
+    VERSION: "4.2.1"
+    VARIANT: ""
+  script: *deploy_branches_script_definition
+
 build:4:
   stage: build
   retry: 2
-  only:
-    - master
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
   tags:
     - build
   variables:
@@ -72,11 +101,11 @@ build:4:
 
 deploy:4:
   stage: deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
   needs: ["build:4"]
   tags:
     - deploy
-  only:
-    - master
   variables:
     VERSION: "4"
     VARIANT: ""
@@ -84,11 +113,9 @@ deploy:4:
 
 build:branches:4:
   stage: build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "master"'
   retry: 2
-  only:
-    - branches
-  except:
-    - master
   tags:
     - build
   variables:
@@ -99,13 +126,11 @@ build:branches:4:
 
 deploy:branches:4:
   stage: deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "master"'
   needs: ["build:branches:4"]
   tags:
     - deploy
-  only:
-    - branches
-  except:
-    - master
   variables:
     VERSION: "4"
     VARIANT: ""
@@ -113,9 +138,9 @@ deploy:branches:4:
 
 build:3:
   stage: build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
   retry: 2
-  only:
-    - master
   tags:
     - build
   variables:
@@ -126,11 +151,11 @@ build:3:
 
 deploy:3:
   stage: deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
   needs: ["build:3"]
   tags:
     - deploy
-  only:
-    - master
   variables:
     VERSION: "3"
     VARIANT: ""
@@ -138,11 +163,9 @@ deploy:3:
 
 build:branches:3:
   stage: build
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "master"'
   retry: 2
-  only:
-    - branches
-  except:
-    - master
   tags:
     - build
   variables:
@@ -153,13 +176,11 @@ build:branches:3:
 
 deploy:branches:3:
   stage: deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "master"'
   needs: ["build:branches:3"]
   tags:
     - deploy
-  only:
-    - branches
-  except:
-    - master
   variables:
     VERSION: "3"
     VARIANT: ""
