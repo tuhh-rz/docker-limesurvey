@@ -58,13 +58,13 @@ if ! [ -e /var/www/app/application/config/config.php ]; then
     cp /var/www/app/application/config/config-sample-mysql.php /var/www/app/application/config/config.php
 fi
 
-# export MYSQL_HOST=${MYSQL_HOST:-db}
-# export MYSQL_PORT=${MYSQL_PORT:-3306}
-# export MYSQL_DATABASE=${MYSQL_DATABASE:-limesurvey}
+export MYSQL_HOST=${MYSQL_HOST:-db}
+export MYSQL_PORT=${MYSQL_PORT:-3306}
+export MYSQL_DATABASE=${MYSQL_DATABASE:-limesurvey}
 
-# perl -i -pe "s/^(\s*'connectionString' => ').*(',)/\1mysql:host=$ENV{'MYSQL_HOST'};port=$ENV{'MYSQL_PORT'};dbname=$ENV{'MYSQL_DATABASE'};\2/g' /var/www/app/application/config/config.php
-# perl -i -pe "s/^(\s*'username' => ').*(',)/\1$ENV{'MYSQL_USER'}\2/g' /var/www/app/application/config/config.php
-# perl -i -pe "s/^(\s*'password' => ').*(',)/\1$ENV{'MYSQL_PASSWORD'}\2/g' /var/www/app/application/config/config.php
+perl -i -pe "s/^(\s*'connectionString' => ').*(',)/\1mysql:host=\$ENV{'MYSQL_HOST'};port=\$ENV{'MYSQL_PORT'};dbname=\$ENV{'MYSQL_DATABASE'};\2/g" /var/www/app/application/config/config.php
+perl -i -pe "s/^(\s*'username' => ').*(',)/\1\$ENV{'MYSQL_USER'}\2/g" /var/www/app/application/config/config.php
+perl -i -pe "s/^(\s*'password' => ').*(',)/\1\$ENV{'MYSQL_PASSWORD'}\2/g" /var/www/app/application/config/config.php
 
 # if [[ $USE_INNODB == "true" ]]; then
 #     #If you want to use INNODB - remove MyISAM specification from LimeSurvey code
