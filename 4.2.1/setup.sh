@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p /var/limesurvey/runtime/
-chown  www-data.www-data /var/limesurvey/runtime/
+chown www-data.www-data /var/limesurvey/runtime/
 
 chown -Rf www-data.www-data /var/www/app/
 
@@ -26,7 +26,6 @@ fi
 /usr/sbin/a2enmod remoteip
 
 perl -i -pe 's/^(\s*LogFormat ")%h( %l %u %t \\"%r\\" %>s %O \\"%\{Referer\}i\\" \\"%\{User-Agent\}i\\"" combined)/\1%a\2/g' /etc/apache2/apache2.conf
-
 
 # Limits: Default values
 export UPLOAD_MAX_FILESIZE=${UPLOAD_MAX_FILESIZE:-300M}
@@ -59,33 +58,31 @@ if ! [ -e /var/www/app/application/config/config.php ]; then
     cp /var/www/app/application/config/config-sample-mysql.php /var/www/app/application/config/config.php
 fi
 
+# export MYSQL_HOST=${MYSQL_HOST:-db}
+# export MYSQL_PORT=${MYSQL_PORT:-3306}
+# export MYSQL_DATABASE=${MYSQL_DATABASE:-limesurvey}
 
-export MYSQL_HOST=${MYSQL_HOST:-db}
-export MYSQL_PORT=${MYSQL_PORT:-3306}
-export MYSQL_DATABASE=${MYSQL_DATABASE:-limesurvey}
+# perl -i -pe "s/^(\s*'connectionString' => ').*(',)/\1mysql:host=$ENV{'MYSQL_HOST'};port=$ENV{'MYSQL_PORT'};dbname=$ENV{'MYSQL_DATABASE'};\2/g' /var/www/app/application/config/config.php
+# perl -i -pe "s/^(\s*'username' => ').*(',)/\1$ENV{'MYSQL_USER'}\2/g' /var/www/app/application/config/config.php
+# perl -i -pe "s/^(\s*'password' => ').*(',)/\1$ENV{'MYSQL_PASSWORD'}\2/g' /var/www/app/application/config/config.php
 
-perl -i -pe "s/^(\s*'connectionString' => ').*(',)/\1mysql:host=$ENV{'MYSQL_HOST'};port=$ENV{'MYSQL_PORT'};dbname=$ENV{'MYSQL_DATABASE'};\2/g' /var/www/app/application/config/config.php
-perl -i -pe "s/^(\s*'username' => ').*(',)/\1$ENV{'MYSQL_USER'}\2/g' /var/www/app/application/config/config.php
-perl -i -pe "s/^(\s*'password' => ').*(',)/\1$ENV{'MYSQL_PASSWORD'}\2/g' /var/www/app/application/config/config.php
+# if [[ $USE_INNODB == "true" ]]; then
+#     #If you want to use INNODB - remove MyISAM specification from LimeSurvey code
+#     sed -i "/ENGINE=MyISAM/s/\(ENGINE=MyISAM \)//1" /var/www/app/application/core/db/MysqlSchema.php
+#     #Also set mysqlEngine in config file
+#     sed -i "/\/\/ Update default LimeSurvey config here/s//'mysqlEngine'=>'InnoDB',/" /var/www/app/application/config/config.php
+#     DBENGINE='InnoDB'
+# fi
 
-if [[ $USE_INNODB == "true" ]]; then
-    #If you want to use INNODB - remove MyISAM specification from LimeSurvey code
-    sed -i "/ENGINE=MyISAM/s/\(ENGINE=MyISAM \)//1" /var/www/app/application/core/db/MysqlSchema.php
-    #Also set mysqlEngine in config file
-    sed -i "/\/\/ Update default LimeSurvey config here/s//'mysqlEngine'=>'InnoDB',/" /var/www/app/application/config/config.php
-    DBENGINE='InnoDB'
-fi
+# if [ -n "$LIMESURVEY_ADMIN_USER" ] && [ -n "$LIMESURVEY_ADMIN_PASSWORD" ]; then
+#     su -s /bin/bash  -c "php /var/www/app/application/commands/console.php install '$LIMESURVEY_ADMIN_USER' '$LIMESURVEY_ADMIN_PASSWORD' '$LIMESURVEY_ADMIN_NAME' '$LIMESURVEY_ADMIN_EMAIL' verbose" www-data
+# fi
 
+# if [ -n "$LIMESURVEY_ADMIN_USER" ] && [ -n "$LIMESURVEY_ADMIN_PASSWORD" ]; then
+# 	echo >&2 'Updating password for admin user'
+#     php application/commands/console.php resetpassword "$LIMESURVEY_ADMIN_USER" "$LIMESURVEY_ADMIN_PASSWORD"
+# fi
 
-	# if [ -n "$LIMESURVEY_ADMIN_USER" ] && [ -n "$LIMESURVEY_ADMIN_PASSWORD" ]; then
-	#     su -s /bin/bash  -c "php /var/www/app/application/commands/console.php install '$LIMESURVEY_ADMIN_USER' '$LIMESURVEY_ADMIN_PASSWORD' '$LIMESURVEY_ADMIN_NAME' '$LIMESURVEY_ADMIN_EMAIL' verbose" www-data
-	# fi
-
-	# if [ -n "$LIMESURVEY_ADMIN_USER" ] && [ -n "$LIMESURVEY_ADMIN_PASSWORD" ]; then
-	# 	echo >&2 'Updating password for admin user'
-    #     php application/commands/console.php resetpassword "$LIMESURVEY_ADMIN_USER" "$LIMESURVEY_ADMIN_PASSWORD"
-	# fi
-
-su -s /bin/bash  -c 'php /var/www/app/application/commands/console.php updatedb' www-data
+su -s /bin/bash -c 'php /var/www/app/application/commands/console.php updatedb' www-data
 
 exec /usr/bin/supervisord -nc /etc/supervisord.conf
