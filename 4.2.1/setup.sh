@@ -72,7 +72,7 @@ if [[ $USE_INNODB == "true" ]]; then
     sed -i "/ENGINE=MyISAM/s/\(ENGINE=MyISAM \)//1" /var/www/app/application/core/db/MysqlSchema.php
     #Also set mysqlEngine in config file
     sed -i "/\/\/ Update default LimeSurvey config here/s//'mysqlEngine'=>'InnoDB',/" /var/www/app/application/config/config.php
-    DBENGINE='InnoDB'
+    DBENGINE=InnoDB
     export DBENGINE
 fi
 
