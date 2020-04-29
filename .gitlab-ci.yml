@@ -57,7 +57,7 @@ stages:
   - deploy
   - build_siblings
 
-build:branches:4.2.1:
+build:incubator:4.2.1:
   stage: build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "incubator"'
@@ -70,11 +70,11 @@ build:branches:4.2.1:
   before_script: *build_branches_before_script_definition
   script: *build_branches_script_definition
 
-deploy:branches:4.2.1:
+deploy:incubator:4.2.1:
   stage: deploy
   rules:
     - if: '$CI_COMMIT_REF_NAME == "incubator"'
-  needs: ["build:branches:4.2.1"]
+  needs: ["build:incubator:4.2.1"]
   tags:
     - deploy
   variables:
@@ -111,6 +111,7 @@ build:branches:4:
   stage: build
   rules:
     - if: '$CI_COMMIT_REF_NAME != "master"'
+    - if: '$CI_COMMIT_REF_NAME != "incubator"'
   retry: 2
   tags:
     - build
@@ -124,6 +125,7 @@ deploy:branches:4:
   stage: deploy
   rules:
     - if: '$CI_COMMIT_REF_NAME != "master"'
+    - if: '$CI_COMMIT_REF_NAME != "incubator"'
   needs: ["build:branches:4"]
   tags:
     - deploy
@@ -161,6 +163,7 @@ build:branches:3:
   stage: build
   rules:
     - if: '$CI_COMMIT_REF_NAME != "master"'
+    - if: '$CI_COMMIT_REF_NAME != "incubator"'
   retry: 2
   tags:
     - build
@@ -174,6 +177,7 @@ deploy:branches:3:
   stage: deploy
   rules:
     - if: '$CI_COMMIT_REF_NAME != "master"'
+    - if: '$CI_COMMIT_REF_NAME != "incubator"'
   needs: ["build:branches:3"]
   tags:
     - deploy
