@@ -47,6 +47,8 @@ perl -i -pe 's/<\/VirtualHost>/<Directory \/var\/www\/html>\nAllowOverride ALL\n
 
 rsync -rc /opt/limesurvey/* "/var/www/app"
 
+find /var/www/app/ ! -user www-data -exec chown www-data: {} +
+
 find /var/www/app -type f -print0 | xargs -0 chmod 660
 find /var/www/app -type d -print0 | xargs -0 chmod 770
 
@@ -55,6 +57,7 @@ find /var/www/app -type d -print0 | xargs -0 chmod 770
 if ! [ -e /var/www/app/application/config/config.php ]; then
     echo >&2 "No config file in $(pwd) Copying default config file..."
     cp /var/www/app/application/config/config-sample-mysql.php /var/www/app/application/config/config.php
+    chown www-data: /var/www/app/application/config/config.php
 fi
 
 export MYSQL_HOST=${MYSQL_HOST:-db}
@@ -82,7 +85,5 @@ if [ -n "$LIMESURVEY_ADMIN_USER" ] && [ -n "$LIMESURVEY_ADMIN_PASSWORD" ]; then
 fi
 
 su -s /bin/bash -c 'php /var/www/app/application/commands/console.php updatedb' www-data
-
-find /var/www/app/ ! -user www-data -exec chown www-data: {} +
 
 exec /usr/bin/supervisord -nc /etc/supervisord.conf
