@@ -17,7 +17,7 @@ if [[ ${ENABLE_SSL} == "true" ]]; then
     /usr/sbin/a2enmod ssl
 else
     /usr/sbin/a2dismod ssl
-    if [-f ] rm /etc/apache2/sites-enabled/default-ssl.conf
+    rm /etc/apache2/sites-enabled/default-ssl.conf
 fi
 
 /usr/sbin/a2enmod rewrite
