@@ -55,6 +55,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #VOLUME /app/upload
 
+WORKDIR /var/www/app
+
 EXPOSE 80
 
 CMD ["/opt/setup.sh"]

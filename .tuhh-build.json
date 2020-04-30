@@ -20,6 +20,9 @@
         },
         "4": {
             "action": "build"
+        },
+        "4.2.1_incubator": {
+            "action": "issue"
         }
     }
 }

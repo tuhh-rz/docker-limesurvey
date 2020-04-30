@@ -80,11 +80,10 @@ fi
 
 if [ -z "$LIMESURVEY_ADMIN_USER" ] || [ -z "$LIMESURVEY_ADMIN_PASSWORD" ]; then
     echo >&2 "Missing LIMESURVEY_ADMIN_USER and/or LIMESURVEY_ADMIN_PASSWORD"
-    su -s /bin/bash -c 'php /var/www/app/application/commands/console.php updatedb' www-data
 else
-    su -s /bin/bash -c 'php /var/www/app/application/commands/console.php updatedb' www-data ||
-        su -s /bin/bash -c "php /var/www/app/application/commands/console.php install '$LIMESURVEY_ADMIN_USER' '$LIMESURVEY_ADMIN_PASSWORD' '$LIMESURVEY_ADMIN_NAME' '$LIMESURVEY_ADMIN_EMAIL' verbose" www-data
+    su -s /bin/bash -c "php /var/www/app/application/commands/console.php install '$LIMESURVEY_ADMIN_USER' '$LIMESURVEY_ADMIN_PASSWORD' '$LIMESURVEY_ADMIN_NAME' '$LIMESURVEY_ADMIN_EMAIL' verbose" www-data
     su -s /bin/bash -c "php /var/www/app/application/commands/console.php resetpassword '$LIMESURVEY_ADMIN_USER' '$LIMESURVEY_ADMIN_PASSWORD'" www-data
+
 fi
 
 su -s /bin/bash -c 'php /var/www/app/application/commands/console.php updatedb' www-data
