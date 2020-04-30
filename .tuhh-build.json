@@ -3,7 +3,7 @@
     "version-check": {
         "active": true,
         "master_key": "LimeSurvey",
-        "sub_key": "LimeSurvey",
+        "sub_key": "",
         "version_digits_in_key": 1
     },
     "registries": [{
