@@ -24,7 +24,7 @@
             "build-branch": "master"
         },
         "4.2.1_incubator": {
-            "action": "issue",
+            "action": "build",
             "build-branch": "incubator"
         }
     }
