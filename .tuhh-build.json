@@ -20,10 +20,12 @@
             "action": "build"
         },
         "4": {
-            "action": "build"
+            "action": "build",
+            "build-branch": "master"
         },
         "4.2.1_incubator": {
-            "action": "issue"
+            "action": "issue",
+            "build-branch": "incubator"
         }
     }
 }
