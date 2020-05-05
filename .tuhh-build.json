@@ -23,7 +23,7 @@
             "action": "build",
             "build-branch": "master"
         },
-        "4.2.1_incubator": {
+        "4.2.2_incubator": {
             "action": "build",
             "build-branch": "incubator"
         }

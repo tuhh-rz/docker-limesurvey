@@ -57,7 +57,7 @@ stages:
   - deploy
   - build_siblings
 
-build:incubator:4.2.1:
+build:incubator:4.2.2:
   stage: build
   rules:
     - if: '$CI_COMMIT_REF_NAME == "incubator"'
@@ -65,20 +65,20 @@ build:incubator:4.2.1:
   tags:
     - build
   variables:
-    VERSION: "4.2.1"
+    VERSION: "4.2.2"
     VARIANT: ""
   before_script: *build_branches_before_script_definition
   script: *build_branches_script_definition
 
-deploy:incubator:4.2.1:
+deploy:incubator:4.2.2:
   stage: deploy
   rules:
     - if: '$CI_COMMIT_REF_NAME == "incubator"'
-  needs: ["build:incubator:4.2.1"]
+  needs: ["build:incubator:4.2.2"]
   tags:
     - deploy
   variables:
-    VERSION: "4.2.1"
+    VERSION: "4.2.2"
     VARIANT: ""
   script: *deploy_branches_script_definition
 
