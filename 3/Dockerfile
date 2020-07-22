@@ -30,6 +30,7 @@ RUN apt-get install -qy \
     git \
     rsync \
     supervisor \
+    unzip \
     wget
 
 RUN apt-get clean
