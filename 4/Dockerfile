@@ -34,8 +34,9 @@ RUN apt-get install -qy \
 
 RUN apt-get clean
 
-RUN wget "${DOWNLOAD}" -O /tmp/download.tar.gz
-RUN tar xf /tmp/download.tar.gz -C /opt && rm /tmp/download.tar.gz
+RUN wget "${DOWNLOAD}" -O /tmp/download.zip
+# RUN tar xf /tmp/download.tar.gz -C /opt && rm /tmp/download.tar.gz
+RUN unzip /tmp/download.zip -d /opt && rm /tmp/download.zip
 
 COPY ./apache.sh /opt/apache.sh
 RUN chmod +x /opt/apache.sh
