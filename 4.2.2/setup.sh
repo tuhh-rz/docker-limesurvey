@@ -45,12 +45,12 @@ perl -i -pe 's/^(\s*;\s*)*memory_limit.*/memory_limit = $ENV{'MEMORY_LIMIT'}/g' 
 
 perl -i -pe 's/<\/VirtualHost>/<Directory \/var\/www\/html>\nAllowOverride ALL\n<\/Directory>\n<\/VirtualHost>/' /etc/apache2/sites-available/000-default.conf
 
-rsync -rc /opt/limesurvey/* "/var/www/app"
+rsync -au /opt/limesurvey/ /var/www/app
 
 find /var/www/app/ ! -user www-data -exec chown www-data: {} +
 
-find /var/www/app -type f -print0 | xargs -0 chmod 660
-find /var/www/app -type d -print0 | xargs -0 chmod 770
+find /var/www/app/ -type f ! -perm 660 -exec chmod 660 {} +
+find /var/www/app/ -type d ! -perm 770 -exec chmod 770 {} +
 
 # Configuration
 
