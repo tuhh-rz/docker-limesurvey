@@ -1,31 +1,35 @@
 {
+  "active": true,
+  "version-check": {
     "active": true,
-    "version-check": {
-        "active": true,
-        "master_key": "LimeSurvey",
-        "sub_key": "LimeSurvey",
-        "version_digits_in_key": 1
+    "master_key": "LimeSurvey",
+    "sub_key": "LimeSurvey",
+    "version_digits_in_key": 1
+  },
+  "registries": [
+    {
+      "name": "collaborating.tuhh.de:5005",
+      "state": "ignore"
     },
-    "registries": [{
-            "name": "collaborating.tuhh.de:5005",
-            "state": "ignore"
-        },
-        {
-            "name": "docker.rz.tu-harburg.de:5000",
-            "state": "present"
-        }
-    ],
-    "image-tags": {
-        "3": {
-            "action": "build"
-        },
-        "4": {
-            "action": "build",
-            "build-branch": "master"
-        },
-        "4.2.2_incubator": {
-            "action": "build",
-            "build-branch": "incubator"
-        }
+    {
+      "name": "docker.rz.tu-harburg.de:5000",
+      "state": "present"
     }
+  ],
+  "image-tags": {
+    "3": {
+      "action": "build"
+    },
+    "4": {
+      "action": "build",
+      "build-branch": "master"
+    },
+    "4.2.2_incubator": {
+      "action": "build",
+      "build-branch": "incubator"
+    }
+  },
+  "upgrade-check": {
+    "active": true
+  }
 }
