@@ -27,5 +27,8 @@
             "action": "build",
             "build-branch": "incubator"
         }
+    },
+    "upgrade-check": {
+        "active": true
     }
 }
