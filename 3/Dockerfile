@@ -8,6 +8,14 @@ ARG DOWNLOAD=${DOWNLOAD}
 ENV DOWNLOAD=$DOWNLOAD
 RUN echo $DOWNLOAD
 
+LABEL \
+  de.tuhh.ci_repository_url=$CI_REPOSITORY_URL \
+  de.tuhh.ci_commit_short_sha=$CI_COMMIT_SHORT_SHA \
+  de.tuhh.build-date=$BUILD_DATE \
+  de.tuhh.version=$VERSION \
+  de.tuhh.eol=20230501
+
+
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -58,10 +66,3 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 EXPOSE 80
 
 CMD ["/opt/setup.sh"]
-
-LABEL \
-    de.tuhh.ci_repository_url=$CI_REPOSITORY_URL \
-    de.tuhh.ci_commit_short_sha=$CI_COMMIT_SHORT_SHA \
-    de.tuhh.build-date=$BUILD_DATE \
-    de.tuhh.version=$VERSION
-
